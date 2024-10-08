@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+}
+.container {
+    border: 2px solid #111111;
+    border-radius: 15px;
+    max-width: 600px;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.5rem;
+}
+.answer {
+    border: 2px solid #111111;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+}
+#submit {
+    width: 580px;
+    height: 45px;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+h1 {
+    color: lightskyblue;
+}
