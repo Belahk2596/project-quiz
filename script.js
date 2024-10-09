@@ -1,4 +1,4 @@
-const questions = [
+const questionsArr = [
   {
     question: "Which of these animals is native to New Zealand?",
     options: [
@@ -102,5 +102,22 @@ const questions = [
 ];
 
 // Add your code underneath this comment.
+
+const myQuestion = document.getElementById('question')
+myQuestion.innerText = questionsArr[0].question;
+
+const answerOne = document.getElementById('first');
+answerOne.innerText = questionsArr[0].options[0];
+
+const answerTwo = document.getElementById('second');
+answerTwo.innerText = questionsArr[0].options[1];
+
+const answerThree = document.getElementById('third');
+answerThree.innerText = questionsArr[0].options[2];
+
+const answerFour = document.getElementById('fourth');
+answerFour.innerText = questionsArr[0].options[3];
+
+
 
 
