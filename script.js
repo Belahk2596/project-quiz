@@ -61,97 +61,53 @@ const questionsArr = [
     answer: "Rotorua",
   },
 ];
-/*
-let count = 0; //counter for question number
-function setQuestionAndAnswerText() {
-  let myQuestion = document.getElementById("question");
-  myQuestion.innerText = questionsArr[count].question;
+//collective id's from html to javascript
 
-  let answerOne = document.getElementById("first");
-  answerOne.innerText = questionsArr[count].options[0];
-
-  let answerTwo = document.getElementById("second");
-  answerTwo.innerText = questionsArr[count].options[1];
-
-  let answerThree = document.getElementById("third");
-  answerThree.innerText = questionsArr[count].options[2];
-
-  let answerFour = document.getElementById("fourth");
-  answerFour.innerText = questionsArr[count].options[3];
-}
-setQuestionAndAnswerText();
-
-let selectedAnswer = null; //to indicate that no answer has been clicked yet
-const answers = document.querySelectorAll(".answer");
-answers.forEach((answer) => {
-  //iterates though each answer in the nodelist
-  answer.addEventListener("click", function () {
-    //adds event handlers to each element of the nodelist
-    if (selectedAnswer) {
-      selectedAnswer.style.backgroundColor = ""; //resets previously selected answer background to default
-    }
-    selectedAnswer = answer;
-    selectedAnswer.style.backgroundColor = "lightgray";
-  });
-});
-
-
-const submitButton = document.getElementById("submit");
-submitButton.addEventListener("click", function () {
- // if (submitButton.innerText === "Click For Next Question") {}
-  const correctAnswer = questionsArr[count].answer;
-  answers.forEach((answer) => {
-    if (answer.innerText === correctAnswer) {
-      answer.style.backgroundColor = "green";
-      submitButton.innerText = "Click For Next Question";
-    } else if (selectedAnswer === answer) {
-      answer.style.backgroundColor = "red";
-      submitButton.innerText = "Click For Next Question";
-    }
-    count++;
-    setQuestionAndAnswerText();
-  })
-}); */
-
+let questionNum = document.getElementById("score");
 let myQuestion = document.getElementById("question");
 let answerOne = document.getElementById("first");
 let answerTwo = document.getElementById("second");
 let answerThree = document.getElementById("third");
 let answerFour = document.getElementById("fourth");
 const submitButton = document.getElementById("submit");
+let score = 0;
 let questionIndex = 0;
+//array for questions
+let questionHeadArr = [1,2,3,4,5,6,7,8,9,10];
 let correctAnswer = questionsArr[questionIndex].answer;
 
-function updateQuestion() {
-
+function updateQuestionAndAnswersText() {
+  questionNum.innerText = `Question ${questionHeadArr[questionIndex]} Your score: ${score}`;
+  correctAnswer = questionsArr[questionIndex].answer;
   myQuestion.innerText = questionsArr[questionIndex].question;
-
   answerOne.innerText = questionsArr[questionIndex].options[0];
-
   answerTwo.innerText = questionsArr[questionIndex].options[1];
-
   answerThree.innerText = questionsArr[questionIndex].options[2];
-
   answerFour.innerText = questionsArr[questionIndex].options[3];
+  //Tracker for my reference
+  console.log(`${correctAnswer}  ${questionIndex}`);
 }
-updateQuestion();
+updateQuestionAndAnswersText();
 
 let answersArr = [answerOne, answerTwo, answerThree, answerFour];
 let selectedAnswer = null;
 
 answersArr.forEach((answer) => {
   answer.addEventListener("click", function () {
+    // statement that returns true
     if (submitButton.innerText == "Submit Answer") {
       if (selectedAnswer) {
         //reset all selected elements to default
         selectedAnswer.style.backgroundColor = "";
       }
+      //sets users selected answer as the current answer element in the array
       selectedAnswer = answer;
+      //user selected answer background color is changed on click
       selectedAnswer.style.backgroundColor = "lightgray";
     }
   });
 });
-
+//Submit handler event
 submitButton.addEventListener("click", submitAnswer);
 
 function submitAnswer() {
@@ -161,17 +117,35 @@ function submitAnswer() {
     if (selectedAnswer.innerText !== correctAnswer) {
       selectedAnswer.style.backgroundColor = "red";
     }
+    //Iterates through the array to find the correct answer
     answersArr.forEach(function (el) {
       if (el.innerText == correctAnswer) {
         el.style.backgroundColor = "green";
+        if (selectedAnswer.innerText == correctAnswer) {
+          score++;
+        }
+        if (questionIndex == 9) {
+          alert(`Well done! You scored ${score} out of 10. Try again?`);
+          submitButton.innerText = "Restart";
+          if (submitButton.innerText = "Restart") {
+            score = 0;
+            questionIndex = 0;
+            submitButton.innerText = "Submit Answer";
+            updateQuestionAndAnswersText()
+          }
+        }
       }
     });
-    questionIndex++;
+    //Next question will run once user has submitted an answer
   } else {
     submitButton.innerText = "Submit Answer";
     answersArr.forEach(function (el) {
       el.style.backgroundColor = null;
     });
-    updateQuestion();
+    //Increments index for questionsArr to access and update questions, answers and correctAnswer text.
+    questionIndex++;
+    //Change question and score inner-text
+    updateQuestionAndAnswersText();
   }
 }
+
